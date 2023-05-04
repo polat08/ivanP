@@ -395,16 +395,35 @@ const films = [
     }
 ];
 
+// function showGoodFilms(films) {
+//     return films.filter(item => item.rating >= 8);  
+// } this code not working!
+
+//Задачи:
+//  У вас есть список фильмов с рейтингом в виде массива объектов. Напишите функцию showGoodFilms, 
+// которая будет принимать этот массив,
+//  а возвращать будет массив объектов только с теми фильмами, у которых рейтинг больше или равен 8.
 function showGoodFilms(films) {
-    return films.filter(item => item.rating >= 8);;
+  return films.filter(function(film) {
+    return film.rating >= 8;
+  });
 }
-showGoodFilms();
+
+let goodFilms = showGoodFilms(films);
+console.log(goodFilms);
+
+//) Напишите функцию showListOfFilms, которая будет принимать этот же массив,
+// а возвращать будет строку, которая содержит названия фильмов через запятую.
 
 function showListOfFilms(arr) {
     return arr.reduce((acc, curr) =>`${typeof(acc) === 'object' ? acc.name : acc}, ${curr.name}`);
 }
 
 showListOfFilms(films);
+
+// Напишите функцию setFilmsIds, которая будет принимать этот же массив, 
+//а возвращать будет такой же массив с фильмами, 
+//но у каждого фильма будет новое поле id. Значение этого поля установите по нумерации фильма.
 
 function setFilmsIds(arr) {
     return arr.map((film, i) => {
@@ -414,6 +433,11 @@ function setFilmsIds(arr) {
 }
 
 const tranformedArray = setFilmsIds(films);
+
+
+//Запишите результат предыдущей функции в переменную tranformedArray. 
+//Напишите функцию checkFilms, которая будет проверять, 
+//что в каждом из фильмов есть поле id. Если это так - функция возвращает true. 
 
 // При срабатывании every на первом фильме он натыкается на id = 0;
 // 0 - это неправда в логическом ключе, поэтому и весь метод возвращает false
@@ -458,3 +482,69 @@ const getTotalIncomeAmount = (data) => {
 }
 
 getTotalIncomeAmount(funds);
+
+
+// инкапсуляция
+// in function constructor
+function User(name, age) {
+  this.name = name;
+  let userAge = age;
+
+  this.say = function() {
+    console.log(`Имя пользователя: ${this.name}, возраст${userAge}`);
+  };
+
+  this.getAge = function() {
+    return userAge;
+  };
+
+  this.setAge = function(age){
+    if (typeof age === 'number' && age > 0 && age <110) {
+      userAge = age;
+    } else {
+      console.log('недопустимое значение');
+    }
+  };
+}
+
+const ivan = new User('Ivan', 26);
+console.log(ivan.name);
+console.log(ivan.getAge());
+
+ivan.setAge(39);
+ivan.setAge(300);
+console.log(ivan.getAge());
+
+ivan.say();
+
+// in classes
+
+class Userr {
+  constructor(name, age) {
+    this.name = name;
+    this._age = age;
+  }
+  
+  #surname = 'Smith';
+ 
+  say = () => {
+    console.log(`Имя пользователя: ${this.name} ${this.#surname}, возраст ${this._age}`);
+  }
+
+  get age() {
+    return this._age;
+  }
+
+  set age(age) {
+    if (typeof age === 'number' && age > 0 && age < 110) {
+      this._age = age;
+    } else {
+      console.log('недопустимое значение');
+    }
+  }
+}
+
+const jhon= new Userr('Jhon', 26);
+jhon.surname = 'Fat';
+console.log(jhon.surname);
+jhon.say();
